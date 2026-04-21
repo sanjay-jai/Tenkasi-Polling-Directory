@@ -1,0 +1,6 @@
+{
+  "name": "Tenkasi Polling Directory",
+  "description": "An official polling station directory for Tenkasi district, enabling users to search and view polling station details by assembly constituency.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
