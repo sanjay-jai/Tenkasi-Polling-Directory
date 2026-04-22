@@ -27,6 +27,8 @@ interface PollingStation {
   aro1Mobile: string;
   aro2: string;
   aro2Mobile: string;
+  aro3: string;
+  aro3Mobile: string;
   zonalOfficer: string;
   zonalOfficerMobile: string;
   zonalAsst: string;
@@ -65,29 +67,29 @@ function OfficerCard({ label, name, phone }: { label: string; name: string; phon
   return (
     <div className="flex flex-col gap-2">
       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{label}</span>
-      <div className="flex items-center justify-between group">
-        <span className={`text-lg font-bold ${isNull ? 'text-slate-300' : 'text-slate-900'} transition-colors`}>
+      <div className="flex items-center justify-between group gap-4">
+        <span className={`text-lg font-bold min-w-0 flex-1 truncate ${isNull ? 'text-slate-300' : 'text-slate-900'} transition-colors`} title={name}>
           {name || 'NULL'}
         </span>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <a 
             href={isPhoneNull ? '#' : `tel:${phone}`}
             onClick={(e) => isPhoneNull && e.preventDefault()}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all ${
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all shrink-0 ${
               isPhoneNull 
               ? 'bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed' 
               : 'bg-pink-50 border-pink-100 text-pink-600 hover:bg-pink-100 hover:border-pink-200 active:scale-95'
             }`}
           >
-            <Phone size={14} />
-            <span className="text-xs font-bold">{phone || 'NULL'}</span>
+            <Phone size={14} className="shrink-0" />
+            <span className="text-xs font-bold leading-none">{phone || 'NULL'}</span>
           </a>
-            <a 
+          <a 
             href={isPhoneNull ? '#' : `https://wa.me/91${phone}`}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => isPhoneNull && e.preventDefault()}
-            className={`p-1 flex items-center justify-center transition-all rounded-full overflow-hidden ${
+            className={`w-8 h-8 flex items-center justify-center transition-all rounded-full overflow-hidden shrink-0 ${
               isPhoneNull 
               ? 'opacity-30 grayscale cursor-not-allowed' 
               : 'hover:scale-110 active:scale-95'
@@ -96,7 +98,7 @@ function OfficerCard({ label, name, phone }: { label: string; name: string; phon
             <img 
               src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
               alt="WhatsApp" 
-              className="w-8 h-8 object-contain"
+              className="w-full h-full object-contain"
               referrerPolicy="no-referrer"
             />
           </a>
@@ -148,20 +150,22 @@ export default function App() {
           aro1Mob: findIdx(['aro1_mobile', 'aro1_mob'], 6),
           aro2: findIdx(['aro2_name', 'aro2 officer'], 7),
           aro2Mob: findIdx(['aro2_mobile', 'aro2_mob'], 8),
-          zOfficer: findIdx(['zonal officer', 'z_off'], 9),
-          zOfficerMob: findIdx(['zonal_mobile', 'z_mob'], 10),
-          zAsst: findIdx(['zonal asst', 'z_asst'], 11),
-          zAsstMob: findIdx(['asst_mobile', 'asst_mob'], 12),
-          blo: findIdx(['blo_name', 'blo'], 13),
-          bloMob: findIdx(['blo_mobile', 'blo_mob'], 14),
-          po: findIdx(['po_name', 'po'], 15),
-          poMob: findIdx(['po_mobile', 'po_mob'], 16),
-          po1: findIdx(['po1_name', 'po1'], 17),
-          po1Mob: findIdx(['po1_mobile', 'po1_mob'], 18),
-          po2: findIdx(['po2_name', 'po2'], 19),
-          po2Mob: findIdx(['po2_mobile', 'po2_mob'], 20),
-          po3: findIdx(['po3_name', 'po3'], 21),
-          po3Mob: findIdx(['po3_mobile', 'po3_mob'], 22),
+          aro3: findIdx(['aro3_name', 'aro3 officer'], 9),
+          aro3Mob: findIdx(['aro3_mobile', 'aro3_mob'], 10),
+          zOfficer: findIdx(['zonal officer', 'z_off'], 11),
+          zOfficerMob: findIdx(['zonal_mobile', 'z_mob'], 12),
+          zAsst: findIdx(['zonal asst', 'z_asst'], 13),
+          zAsstMob: findIdx(['asst_mobile', 'asst_mob'], 14),
+          blo: findIdx(['blo_name', 'blo'], 15),
+          bloMob: findIdx(['blo_mobile', 'blo_mob'], 16),
+          po: findIdx(['po_name', 'po'], 17),
+          poMob: findIdx(['po_mobile', 'po_mob'], 18),
+          po1: findIdx(['po1_name', 'po1'], 19),
+          po1Mob: findIdx(['po1_mobile', 'po1_mob'], 20),
+          po2: findIdx(['po2_name', 'po2'], 21),
+          po2Mob: findIdx(['po2_mobile', 'po2_mob'], 22),
+          po3: findIdx(['po3_name', 'po3'], 23),
+          po3Mob: findIdx(['po3_mobile', 'po3_mob'], 24),
         };
 
         const mappedData: PollingStation[] = rows.map((row: any) => {
@@ -175,6 +179,8 @@ export default function App() {
             aro1Mobile: cleanValue(c[idxMap.aro1Mob]),
             aro2: cleanValue(c[idxMap.aro2]),
             aro2Mobile: cleanValue(c[idxMap.aro2Mob]),
+            aro3: cleanValue(c[idxMap.aro3]),
+            aro3Mobile: cleanValue(c[idxMap.aro3Mob]),
             zonalOfficer: cleanValue(c[idxMap.zOfficer]),
             zonalOfficerMobile: cleanValue(c[idxMap.zOfficerMob]),
             zonalAsst: cleanValue(c[idxMap.zAsst]),
@@ -418,6 +424,7 @@ export default function App() {
                     <OfficerCard label="RO" name={currentResult.ro} phone={currentResult.roMobile} />
                     <OfficerCard label="ARO1" name={currentResult.aro1} phone={currentResult.aro1Mobile} />
                     <OfficerCard label="ARO2" name={currentResult.aro2} phone={currentResult.aro2Mobile} />
+                    <OfficerCard label="ARO3" name={currentResult.aro3} phone={currentResult.aro3Mobile} />
                     <OfficerCard label="Zonal Officer" name={currentResult.zonalOfficer} phone={currentResult.zonalOfficerMobile} />
                     <OfficerCard label="Zonal Asst" name={currentResult.zonalAsst} phone={currentResult.zonalAsstMobile} />
                     <OfficerCard label="BLO Name" name={currentResult.bloName} phone={currentResult.bloMobile} />
